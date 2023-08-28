@@ -43,8 +43,9 @@ var (
 	totalLen, firstOffset int32
 )
 
-type PhoneData struct {
-}
+var PhoneQuery *PhoneData
+
+type PhoneData struct{}
 
 func NewPhoneData(path string) (*PhoneData, error) {
 	var err error
@@ -55,6 +56,18 @@ func NewPhoneData(path string) (*PhoneData, error) {
 	totalLen = int32(len(content))
 	firstOffset = get4(content[INT_LEN : INT_LEN*2])
 	return &PhoneData{}, nil
+}
+
+func NewPhoneQuery(path string) error {
+	var err error
+	content, err = os.ReadFile(path)
+	if err != nil {
+		return err
+	}
+	totalLen = int32(len(content))
+	firstOffset = get4(content[INT_LEN : INT_LEN*2])
+	PhoneQuery = &PhoneData{}
+	return nil
 }
 
 // func init() {
